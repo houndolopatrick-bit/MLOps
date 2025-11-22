@@ -27,7 +27,7 @@ data = {"gender" : gender, "Partner": Partner, "OnlineSecurity" : OnlineSecurity
     "InternetService" : InternetService, "MonthlyCharges" : MonthlyCharges} 
 
 # URL prediction
-url = "http://127.0.0.1:8000/predict"
+url = "https://mlops-3-vcca.onrender.com/predict"
 
 # Scop des variables Dans Python classique, une variable définie après un événement n’existe pas avant.
 # Dans Streamlit, les événements déclenchent une ré-exécution complète, donc toute variable définie dans
