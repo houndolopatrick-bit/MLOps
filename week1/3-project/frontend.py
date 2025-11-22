@@ -27,15 +27,17 @@ data = {"gender" : gender, "Partner": Partner, "OnlineSecurity" : OnlineSecurity
     "InternetService" : InternetService, "MonthlyCharges" : MonthlyCharges} 
 
 # URL prediction
-url = "http://127.0.0.1:8000/predict"
+url = "https://mlops-3-vcca.onrender.com/predict"
 
 # Scop des variables Dans Python classique, une variable définie après un événement n’existe pas avant.
 # Dans Streamlit, les événements déclenchent une ré-exécution complète, donc toute variable définie dans
 #  un bloc dépendant d’un widget n’existe qu’après le clic, même si on lit le script du haut vers le bas.
 
 if st.button("Send"):
-   req = requests.post(url,json = data) 
-   print(req)
+   reponse  = requests.post(url,json = data) 
+   reponse = reponse.json()
+   st.write(f"La probabilité de quitter cette entreprise est de {reponse["proba_prediction"]}./n" )
+
 
 # Interception de l'erreur
 try:

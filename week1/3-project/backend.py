@@ -77,9 +77,10 @@ async def predict_churn(data: CustomerData):
      un format simple et transportable"""
     # Faire la prédiction
     prediction = model.predict(df)
+    proba_prediction = model.predict_proba(df)
 
     # Retourner le résultat
-    return  {'churn_prediction': int(prediction[0])}
+    return  {'churn_prediction': int(prediction[0], "proba_prediction" : int(proba_prediction))}
 
 
 #  Quand tu appuies sur le bouton, st.button() renvoie True pendant une exécution, puis repasse à False
