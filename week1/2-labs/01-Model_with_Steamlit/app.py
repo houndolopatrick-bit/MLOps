@@ -12,6 +12,12 @@ from skl2onnx.common.data_types import FloatTensorType
 # General setting
 # ------------------------------------------------------- 
 st.set_page_config(page_title='Iris ML App', layout='wide')
+""" La fonction st.set_page_config() dans Streamlit sert à configurer les paramètres par défaut de la page de votre application, tels que le titre de l'onglet 
+du navigateur, l'icône, la mise et page et l'état initial de la barre latérale
+_____ Arguments____
+page_title : définit le titre de l'onglet du navigateur
+page_icone : définit l'icône
+layout : contrôle la largeur du contenu, 'centered' : colonne centrée, 'wide' : en pleine largeur"""
 
 # ------------------------------------------------------- 
 # Sidebar
@@ -22,8 +28,28 @@ with st.sidebar.header('1. Upload your CSV data'):
 [Example CSV input file](./data/Iris.csv)
 """)
 
+""" Sidebar représente un conteneur situé sur le côté gauche de votre application, utilisé pour organiser des widgets de navigation et de 
+contrôle  tout en laissant l'espace principal pour le contenu
+__la fonction st.sidebar.header()__ : permet d'ajouter un titre de section dans la barre latérale pour structurer et organiser vos contrôles.
+Pour grouper vos widgets , vous aurez à utiliser st.sidebar.header(), st.sidebar.subheader(), st.sidebar.expander()
+Navigation : Dans une application multi-pages, la barre latérale est idéale pour la navigation
+Interaction : Tous les widgets streamlit de base (boutons, sélecteurs, curseurs) peuvent être palcés dans la barre latérale
+__la fonction st.file_uploader() : Utile pour pouvoir l'importation  de fichier selon son type par l'utilsateur"""
+
 with st.sidebar.header('2. Set Parameters'):
     split_size = st.sidebar.slider('Data split ratio (% for Training Set)', 10, 90, 80, 5)
+
+""" __st.slider() : curseur numérique dans streamlit qui permet de sélectionner une valeur numérique dans une plage continue ou discrète
+__Arguments___
+ label = "choississez une valeur"
+min_value = 0
+ max_value = 100
+ value = 50 (valeur par défaut)
+ step = 1
+ __ select_slider() : curseur de sélection où vous sélectionner une valeur parmi des options prédéfinies (numériques ou textuelles)
+ label = "choississez une option"
+ options = ["Faible", "Moyen", "Elevé] """ 
+
 
 with st.sidebar.subheader('2.1. Learning Parameters'):
     parameter_n_estimators = st.sidebar.slider('Number of estimators (n_estimators)', 0, 1000, 100, 100)
@@ -41,6 +67,15 @@ with st.sidebar.subheader('2.2. General Parameters'):
 # ------------------------------------------------------- 
 # Utils
 # ------------------------------------------------------- 
+"""__st.markdown() : sert à afficher du texte avec la syntase Markdown pour une mise en forme avancée.
+__st.write()__ : Affichage universelle
+Affiche presque n'importe quel type de données (texte, données, graphiques,variables etc..)
+En bref, il se comporte comme print(), on peut l'utiliser avec les fstring ou l'écriture formatée
+__ st.info() : Affichage un message dans un conteneur stylisé pour les informations.  """
+
+""" with est un assistant personnel qui s'occupe de l'ouverture et de la fermeture des ressoruces et aide lors de la structuration de votre travail"""
+
+
 def formating_pipeline(df):
     st.markdown('**1.2. Dataset Info**')
     buffer = io.StringIO()
@@ -150,7 +185,7 @@ def save_model(model, X_train):
             file_name='model.onnx',
             mime='application/octet-stream'
         )
-
+""" Les différents manières d'enregistrer son modèle sont notifié ici, soit tu utilises joblib, pickle ou onnx comme format d'enregistrement"""
 # ------------------------------------------------------- 
 # Main
 # ------------------------------------------------------- 

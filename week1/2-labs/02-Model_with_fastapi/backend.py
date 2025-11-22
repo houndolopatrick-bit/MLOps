@@ -64,6 +64,7 @@ async def predict(file: UploadFile):
         "dog_proba": proba,
         "predict_class": "dog" if proba > 0.5 else "cat"
     }
+<<<<<<< HEAD
 
 # @app.post("/predict")
 # async def predict(params: Params):
@@ -80,3 +81,24 @@ async def predict(file: UploadFile):
 #         "dog_proba": proba,
 #         "predict_class": "dog" if proba > 0.5 else "cat"
 #     }
+=======
+"""from pydantic import BaseModel
+
+class Params(BaseModel):
+    age: int
+    weight: float
+    height: float
+    - BaseModel : classe de base fournie par Pydantic. Elle permet de créer des modèles avec validation automatique.
+- Params : nom de ta classe, ici utilisée pour regrouper des paramètres.
+- age: int : champ obligatoire, doit être un entier
+- weight: float : champ obligatoire, doit être un nombre décimal
+- height: float : idem
+Avantage de BaseModel de Pydantic
+La validation automatique consiste à vérifier que les données reçues (par exemple via une requête HTTP) sont du bon type, complets, et conformes à ce que ton programme attend
+La sérialisation consiste à convertir un objet Python (comme une instance de Params) en un format transportable, comme du JSON, pour l’envoyer à un client ou à une autre API.
+Exemple : 
+params = Params(age=30, weight=70.5, height=175)
+json_data = params.json()
+
+"""
+>>>>>>> f662e81 (WIP: travail en cours)

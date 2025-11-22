@@ -28,10 +28,25 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+"""unsafe_allow_html=True est un paramètre utilisé dans Streamlit, une bibliothèque Python pour créer des interfaces web interactives. 
+Ce paramètre est utilisé avec la fonction st.markdown() ou st.write() pour autoriser du code HTML brut dans l’application.
+"""
 
 upload = st.file_uploader("Upload an image of a cat or dog", type=['png', 'jpg', 'jpeg'])
+"""La fonction requests.post() en Python sert à envoyer une requête HTTP POST à un serveur web. C’est une méthode de la bibliothèque requests, très utilisée pour interagir avec des APIs.
 
-if upload:
+📬 Que fait requests.post() exactement ?
+Elle envoie des données (texte, JSON, fichiers, etc.) à une URL donnée, généralement pour :
+- Créer une ressource (ex : un nouvel utilisateur)
+- Envoyer un fichier
+- Lancer une prédiction (dans le cas d’un modèle ML)
+- Soumettre un formulaire
+req.json()
+- Récupère la réponse du serveur sous forme de dictionnaire Python
+- Cela suppose que le serveur FastAPI renvoie une réponse au format JSON, comme :
+
+"""
+if upload: # permet d'appliquer un bloc d'instructions à condition que la variable existe
     files = {"file": upload.getvalue()}
 
     with st.spinner("Analyzing the image..."):
@@ -63,3 +78,30 @@ if upload:
             """,
             unsafe_allow_html=True,
         )
+"""Oui, exactement ! La méthode requests.post() envoie une requête au serveur et attend une réponse dans le même appel. 
+C’est un aller-retour complet entre ton programme et l’API.
+
+🔁 Ce qui se passe étape par étape
+- Tu envoies une requête POST :
+- Avec une URL (ex. http://localhost:8000/predict)
+- Et des données (ex. un fichier, un JSON, un formulaire)
+- Le serveur reçoit la requête, la traite (ex. il lit le fichier, fait une prédiction, etc.)
+- Le serveur renvoie une réponse :
+- Souvent au format JSON
+- Avec un code HTTP (200, 400, 500…)
+- Ton programme reçoit cette réponse :
+- Tu peux lire le contenu avec .json(), .text, .status_code, etc.
+"""
+
+"""- GET : pour lire des données
+- POST : pour envoyer des données
+- Les deux renvoient une réponse que tu peux lire avec .json(), .text, .status_code, etc.
+import requests
+
+params = {"nom": "Alice", "ville": "Cotonou"}
+response = requests.get("https://api.exemple.com/recherche", params=params)
+Elle sert à insérer des clés valeurs, q?= valeur à travers un json que l'on nomme params dans get()
+""" 
+
+# Un endpoint est une URL spécifique dans une API qui accepte des requêtes et retourne des réponses. 
+# Chaque endpoint correspond à une fonctionnalité précise

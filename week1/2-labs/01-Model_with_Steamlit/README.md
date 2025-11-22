@@ -19,3 +19,12 @@ pip install -r requirements.txt
 ```
 python -m streamlit run app.py
 ```
+🔹 1. Le rôle de python -m
+
+L’option -m de Python veut dire :
+
+« Exécute le module nommé qui se trouve dans les paquets installés, comme si c’était un script. »
+
+Autrement dit, python -m streamlit dit à Python :
+
+« Trouve le module streamlit installé dans l’environnement courant et exécute son code principal. »
