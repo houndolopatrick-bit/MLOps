@@ -1,0 +1,5 @@
+En travaillant, je me rend compte que les commandes docker ne peuvent être exécuté si tu n'as pas ouvert docker desktop ou le logiciel docker 
+sur ton système d'exploitation au préalable. Tu dois créer une image qui est représenté par ton Dockerfile qui peut utiliser des images 
+déjà préconstruites et disponibles sur dockerhube . Retenez bien qu'on ne réinvent e pas la roue 
+Je remarque aussi que pas besoin d'être dans son environnnement virtuel pour lancer le dockerfilea, il faut être dans le répertoire courant
+de son dokckerfile pour le lancer 

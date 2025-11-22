@@ -11,3 +11,6 @@ RUN pip install -r requirements.txt
 COPY . .
 
 CMD ["uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# La commande --no-cache dans Docker est une option que tu passes à docker build. Elle contrôle la manière dont Docker 
+# utilise son cache lors de la construction de l’image. Voici une explication détaillée :

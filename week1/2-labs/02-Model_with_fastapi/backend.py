@@ -64,7 +64,6 @@ async def predict(file: UploadFile):
         "dog_proba": proba,
         "predict_class": "dog" if proba > 0.5 else "cat"
     }
-<<<<<<< HEAD
 
 # @app.post("/predict")
 # async def predict(params: Params):
@@ -81,7 +80,6 @@ async def predict(file: UploadFile):
 #         "dog_proba": proba,
 #         "predict_class": "dog" if proba > 0.5 else "cat"
 #     }
-=======
 """from pydantic import BaseModel
 
 class Params(BaseModel):
@@ -101,4 +99,3 @@ params = Params(age=30, weight=70.5, height=175)
 json_data = params.json()
 
 """
->>>>>>> f662e81 (WIP: travail en cours)
