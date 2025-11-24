@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 # ------------------------------------------------------- 
 # General setting
@@ -9,7 +10,7 @@ st.title("Churn predictor")
 st.markdown("Bienvenue à SpaceLand, où tout est possible. Il suffit d'y croire fort")
 st.write("Sans plus tarder prédison l'attrition des clients. Remplissez les champs sur votre gauche et explorons les possibilités de l'acquisition de cette nouvelle compétence ")
 
-with st.sidebar.header('Set Parameters'):
+with st.sidebar.header('Select your attributs'):
     gender = st.sidebar.radio('Quel est votre genre ?', options = ["Female", "Male"])
     Partner = st.sidebar.radio('Avez-vous un partenaire (conjoint) ?', options = ["Yes", "No"])
     OnlineSecurity= st.sidebar.radio('OnlineSecurity', options = ["Yes", "No"])
@@ -19,41 +20,49 @@ with st.sidebar.header('Set Parameters'):
     PhoneService = st.sidebar.radio('PhoneService', options = ["Yes", "No"])
     MultipleLines =st.sidebar.radio("MultipleLines", options = ["No", "Yes", "No phone service"] ) 
     InternetService = st.sidebar.radio("InternetService", options = ["No", "DSL", "Fiber Optic"] )
-    MonthlyCharges = st.sidebar.number_input("MonthlyCharges", value = 0)
 
 # Mes data
 data = {"gender" : gender, "Partner": Partner, "OnlineSecurity" : OnlineSecurity, "SeniorCitizen": SeniorCitizen,
     "Dependents" : Dependents, "tenure" : tenure, "PhoneService" : PhoneService, "MultipleLines" : MultipleLines,
-    "InternetService" : InternetService, "MonthlyCharges" : MonthlyCharges} 
+    "InternetService" : InternetService} 
+# Rechercher pourquoi je dois mettre entre parenthèses (), les valeurs de mes clés 
 
-# URL prediction
+
+
+st.info("Veuillez entrer les paramètres puis appuyer sur Send")
+df = pd.DataFrame(data = [data])
+st.write (df.head())
+# URL prediction "https://mlops-3-vcca.onrender.com"
 url = "https://mlops-3-vcca.onrender.com/predict"
 
 # Scop des variables Dans Python classique, une variable définie après un événement n’existe pas avant.
 # Dans Streamlit, les événements déclenchent une ré-exécution complète, donc toute variable définie dans
 #  un bloc dépendant d’un widget n’existe qu’après le clic, même si on lit le script du haut vers le bas.
 
-if st.button("Send"):
-   reponse  = requests.post(url,json = data) 
-   reponse = reponse.json()
-   st.write(f"La probabilité de quitter cette entreprise est de {reponse["proba_prediction"]}./n" )
 
 
 # Interception de l'erreur
 try:
-        response = requests.post(url, json=data)
-        # Oui exactement, status_code est un attribut d’un objet Response dans les bibliothèques HTTP comme
-        #  requests en Python (ou FastAPI côté serveur, mais côté client c’est un attribut de la réponse).
-
+    # Oui exactement, status_code est un attribut d’un objet Response dans les bibliothèques HTTP comme
+    #  requests en Python (ou FastAPI côté serveur, mais côté client c’est un attribut de la réponse).
+    
+    if st.button("Send"):
+        response  = requests.post(url,json = data) 
+        reponse = response.json()
+        if reponse['proba_prediction'] < 0.5:
+            st.write(f"La probabilité de quitter cette entreprise est de {reponse['proba_prediction']: .3f}.\n" )
+        else:
+             st.write(f"La probabilité de rester dans l'entreprise est de reponse['proba_prediction']: .3f}")
+        # Je ne peux pas mettre double guillemets au niveau de predict_proba compte tenu des doubles guillemets mis au niveau du f-string 
+        # N'oublie pas les .2f et les ajustemnets qu'on peut faire 
         if response.status_code == 200:
             st.success("Prediction reçue !") # Fonction Streamlit qui affiche un message de succès avec un encadré vert.
             # Très utile pour indiquer à l’utilisateur que l’action a été réalisée correctement.
-             # le résultat de notre api est un dictionnaire qu'il est important de convertir en json
-            st.write(response)
+            # le résultat de notre api est un dictionnaire qu'il est important de convertir en json
+            st.write("Mon modèle est le meilleur")
         else:
             st.error(f"Erreur API : {response.status_code}") # Fonction Streamlit qui affiche un message d’erreur avec un encadré rouge.
             # Très pratique pour alerter l’utilisateur d’un problème.
-            st.write(response.json())
 
 except Exception as e:
         st.error("Impossible de contacter l'API.")
