@@ -8,7 +8,7 @@ import pandas as pd
 app = FastAPI()
 
 def load():
-    model_path = r"week1/3-project/model.pkl"
+    model_path = r"week1/3-project/model.pkl" # J'ai du changer le `\ par / pour me conformer à Render baser sous Linux §§§§
     model = joblib.load(model_path)
     return model
 # Prendre l'habitude d'utiliser les row string dans mes appplication de chemin (path)
