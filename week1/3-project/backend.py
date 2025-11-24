@@ -19,7 +19,7 @@ model = load()
 # __ First route__
 @app.get("/")
 def bonjour():
-    return {info : "Bienvenue pour la prédiction de l'attrition des clients"}
+    return {"info" : "Bienvenue pour la prédiction de l'attrition des clients"}
 
 # __ Second route__
 
@@ -34,11 +34,7 @@ class CustomerData(BaseModel):
     MultipleLines: str
     InternetService: str
     OnlineSecurity: str
-    MonthlyCharges : float 
     # ajoute toutes les autres variables nécessaires
-@app.get("/")
-def bonjour():
-    return {"info": "Bienvenue pour la prédiction de l'attrition des clients"}
 
 
 # Définir une route pour la prédiction
@@ -52,7 +48,7 @@ async def predict_churn(data: CustomerData):
     df['gender'] = df['gender'].map({'Male': 1, 'Female': 0})
 
     # One-hot encoding pour les colonnes catégorielles
-    df = pd.get_dummies(df, drop_first=True)
+    df = pd.get_dummies(df,columns = ["MultipleLines", "InternetService", "OnlineSecurity"],  drop_first=True, dtype = int)
 
     # -------------------------------------------
     # Alignement des colonnes avec le modèle (important si ton modèle a été entraîné sur un ensemble plus large)
@@ -64,8 +60,9 @@ async def predict_churn(data: CustomerData):
     # C’est extrêmement utile — et souvent indispensable — lorsqu’on fait du déploiement, car il permet de
     # vérifier que les données envoyées au modèle au moment de la prédiction correspondent exactement aux données utilisées à l’entraînement.
 
-    df = df.reindex(columns=model_columns, fill_value=0)
+    df = df.reindex(columns=model_columns, fill_value = 0)
      # La méthode reindex() de pandas sert à réarranger, ajouter ou supprimer des lignes/colonnes dans un DataFrame en fonction d’un nouvel index ou d’une nouvelle liste de colonnes.
+    # fill_value = 0, c'est se paramètre  qui a planté mon fastapi
 
     # En clair : reindex force un DataFrame à correspondre à une liste d’index/colonnes donnée.
     # “Garde exactement ces colonnes, dans cet ordre.
@@ -80,8 +77,9 @@ async def predict_churn(data: CustomerData):
     proba_prediction = model.predict_proba(df)
 
     # Retourner le résultat
-    return  {'churn_prediction': int(prediction[0], "proba_prediction" : int(proba_prediction))}
-
+    return  {"churn_prediction": int(prediction[0]), "proba_prediction" : float(proba_prediction[0][1])} # ici je n'avais mis que int(proba_prediction[0])
+    # je ne peux pas transformer une liste en entier 
+    # La probabilité c'est un nombre à virgule pas un int, comment je peux mettre int
 
 #  Quand tu appuies sur le bouton, st.button() renvoie True pendant une exécution, puis repasse à False
 """- Started server process [22072] → Uvicorn a lancé un processus avec l’ID 22072.
