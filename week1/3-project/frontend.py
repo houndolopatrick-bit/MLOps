@@ -52,7 +52,7 @@ try:
         if reponse['proba_prediction'] < 0.5:
             st.write(f"La probabilité de quitter cette entreprise est de {reponse['proba_prediction']: .3f}.\n" )
         else:
-             st.write(f"La probabilité de rester dans l'entreprise est de reponse['proba_prediction']: .3f}")
+             st.write(f"La probabilité de rester dans l'entreprise est de {reponse['proba_prediction']: .3f}")
         # Je ne peux pas mettre double guillemets au niveau de predict_proba compte tenu des doubles guillemets mis au niveau du f-string 
         # N'oublie pas les .2f et les ajustemnets qu'on peut faire 
         if response.status_code == 200:
