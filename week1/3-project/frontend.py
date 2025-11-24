@@ -33,7 +33,7 @@ st.info("Veuillez entrer les paramètres puis appuyer sur Send")
 df = pd.DataFrame(data = [data])
 st.write (df.head())
 # URL prediction "https://mlops-3-vcca.onrender.com"
-url = "https://mlops-3-vcca.onrender.com/predict"
+url = "https://mlops-lt78.onrender.com/predict"
 
 # Scop des variables Dans Python classique, une variable définie après un événement n’existe pas avant.
 # Dans Streamlit, les événements déclenchent une ré-exécution complète, donc toute variable définie dans
