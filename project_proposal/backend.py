@@ -5,7 +5,6 @@ import pandas as pd
 from datetime import date,  datetime
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from typing import List 
 
 
 # Créer l'application FastAPI
@@ -51,19 +50,19 @@ class Observation(BaseModel):
    onpromotion : int
     # ajoute toutes les autres variables nécessaires
 
-# 2. Le modèle du dictionnaire conteneur
-class PredictionRequest(BaseModel):
-    observations: list[Observation]
-
 # Définir une route pour la prédiction
 @app.post("/predict")   
-def predict_churn(data: PredictionRequest):
+def predict_churn(data: Observation):  # Structure de observation 
 
-    # Extraire la liste des dictionnaires validés
-    list_of_observations = data.observations
-    
     # 1. Convertir la liste en DataFrame
-    df = pd.DataFrame([obs.model_dump() for obs in list_of_observations])
+    df_original = pd.DataFrame([data.model_dump()])
+    N = 5
+
+    # 1. Utiliser le même principe d'index répétitif, mais en utilisant N
+    index_repete_fixe = np.repeat(df_original.index.values, 5)
+
+    # 2. Appliquer .loc[]
+    df = df_original.loc[index_repete_fixe].reset_index(drop=True)
                       
     df['date'] = pd.to_datetime(df['date'], format ="%Y-%m-%d") # sépareer par des / est différent de - au niveau de format
      # Mêmes transformations que pendant l'entraînement !
