@@ -1,0 +1,13 @@
+numpy
+asyncio
+pandas
+matplotlib
+scikit-learn
+xgboost
+catboost
+uvicorn
+fastapi
+streamlit
+tensorflow
+datetime
+requests
