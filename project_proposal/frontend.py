@@ -58,7 +58,7 @@ st.success("Séquence complète. Prêt pour la prédiction !")
     # Le bouton de prédiction n'apparaît que lorsque les 6 sont là.
     # URL prediction 
     # Usage  de la route predict
-url = "http://127.0.0.1:8000/predict"
+url = "https://mlops-lt78.onrender.com/predict"
 
 
     # Interception de l'erreur
