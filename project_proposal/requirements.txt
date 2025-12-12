@@ -1,10 +1,10 @@
 numpy
-asyncio
+# asyncio
 pandas
 matplotlib
 scikit-learn
-xgboost
-catboost
+# xgboost
+# catboost
 uvicorn
 fastapi
 streamlit
