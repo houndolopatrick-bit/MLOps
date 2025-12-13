@@ -3,6 +3,7 @@ from datetime import date, datetime
 import streamlit as st
 import requests  # Nécessaire pour la requête d'API
 import pandas as pd
+from time import sleep
 
 # ------------------------------------------------------- 
 # General setting
@@ -69,14 +70,17 @@ try:
     
     if st.button("Envoyer"):
         # Envoie des données à mon url uvicorn de fastapi
+
         response  = requests.post(url, json = data) 
         if response.status_code == 200:
+            st.write("Le modèle traite vos données en temps réel.")
+            sleep(3)
+            st.write("Patientez un court instant....")
+
             reponse = response.json()
             st.success("Données bien reçue!") # Fonction Streamlit qui affiche un message de succès avec un encadré vert.
             # Très utile pour indiquer à l’utilisateur que l’action a été réalisée correctement.
             # le résultat de notre api est un dictionnaire qu'il est important de convertir en json
-            st.write("Le modèle traite vos données en temps réel.")
-            st.write("Patientez un court instant....")
             st.write(f"Vos ventes seront de {reponse['prediction']: .3f} le {date_str}.")
             
         else:      
