@@ -74,7 +74,7 @@ try:
         response  = requests.post(url, json = data) 
         if response.status_code == 200:
             st.write("Le modèle traite vos données en temps réel.")
-            sleep(3)
+            st.write(sleep(3))
             st.write("Patientez un court instant....")
 
             reponse = response.json()
