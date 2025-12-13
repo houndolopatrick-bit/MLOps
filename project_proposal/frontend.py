@@ -74,7 +74,11 @@ try:
         response  = requests.post(url, json = data) 
         if response.status_code == 200:
             st.write("Le modèle traite vos données en temps réel.")
-            st.write(sleep(3))
+            progress_bar = st.progress(0, text="Progression du traitement...")
+
+            for percent_complete in range(100):
+                sleep(0.05)
+                progress_bar.progress(percent_complete + 1, text=f"Progression : {percent_complete + 1}%")
             st.write("Patientez un court instant....")
 
             reponse = response.json()
